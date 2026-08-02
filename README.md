@@ -41,14 +41,15 @@ Le pipeline s'appuie sur le dataset **LANL Comprehensive Multi-Source Cyber-Secu
 ## 📊 Dataset
 
 - **Source** : [csr.lanl.gov/data/cyber1](https://csr.lanl.gov/data/cyber1/)
-- **Fichiers utilisés** : `auth.txt.gz` (logs d'authentification, 7,6 Go) et `redteam.txt.gz` (événements de compromission connus, vérité terrain)
+- **Fichiers utilisés** : `auth.txt.gz` (logs d'authentification, 1 051 430 459 lignes) et `redteam.txt.gz` (événements de compromission connus, vérité terrain)
 - Schéma détaillé : voir [`documentation_schema.md`](./documentation_schema.md)
+- Diagnostic qualité complet : voir [`rapport_diagnostic_bronze.docx`](./rapport_diagnostic_bronze.docx)
 
 ## 🚀 Installation
 
 ### Pré-requis
 - R + RStudio
-- Packages R : `aws.s3`, `duckdb`, `httr`
+- Packages R : `aws.s3`, `duckdb`, `DBI`, `httr`
 - Un compte AWS avec accès à un bucket S3
 - Power BI Desktop (pour le dashboard final)
 
@@ -65,18 +66,21 @@ Le pipeline s'appuie sur le dataset **LANL Comprehensive Multi-Source Cyber-Secu
    ```
 3. Installer les dépendances R :
    ```r
-   install.packages(c("aws.s3", "duckdb", "httr"))
+   install.packages(c("aws.s3", "duckdb", "DBI", "httr"))
    ```
 
 ## 📁 Structure du projet
 
 ```
 groupe6-lakehouse-forensique/
-├── README.md                    # Ce fichier
-├── documentation_schema.md      # Documentation du schéma des données
-├── 01_upload_bronze.R           # Script d'ingestion vers la zone Bronze
-├── .gitignore                   # Exclut .Renviron et data/
-└── data/                        # Fichiers locaux (non versionnés)
+├── README.md                      # Ce fichier
+├── documentation_schema.md        # Documentation du schéma des données brutes
+├── rapport_diagnostic_bronze.docx # Rapport de diagnostic qualité (Semaine 1)
+├── rapport_nettoyage_silver.docx  # Rapport de nettoyage + difficultés rencontrées (Semaine 2)
+├── code.R                         # Script d'ingestion vers la zone Bronze
+├── 02_nettoyage_silver.R          # Script de nettoyage -> zone Silver
+├── .gitignore                     # Exclut .Renviron et data/
+└── data/                          # Fichiers locaux (non versionnés)
 ```
 
 ## 📈 État d'avancement
@@ -86,12 +90,19 @@ groupe6-lakehouse-forensique/
 | 1 | Mise en place S3 (bucket + 3 zones) | ✅ Terminé |
 | 1 | Ingestion des données brutes vers Bronze | ✅ Terminé |
 | 1 | Exploration et documentation du schéma | ✅ Terminé |
-| 2 | Nettoyage et typage — zone Silver | 🔜 À venir |
+| 2 | Diagnostic qualité exhaustif (1,05 milliard de lignes) | ✅ Terminé |
+| 2 | Nettoyage et typage — zone Silver | ✅ Terminé |
+| 2 | Export Parquet + upload S3 | ✅ Terminé |
 | 3 | Agrégations et requêtes DuckDB — zone Gold | 🔜 À venir |
 | 4 | Dashboard Power BI | 🔜 À venir |
 | 5 | Finalisation, tests, documentation | 🔜 À venir |
 
-**Dernière mise à jour** : Semaine 1 complétée — `auth.txt.gz` (7,1 Go) et `redteam.txt.gz` uploadés avec succès vers `s3://groupe06-lakehouse-forensique/bronze/`.
+**Dernière mise à jour** : Semaine 2 complétée — zone Silver construite (`auth_silver.parquet`, 7,35 Go, 1 051 430 459 lignes nettoyées) et uploadée vers `s3://groupe06-lakehouse-forensique/silver/`.
+
+### Détails techniques notables (Semaine 2)
+- Traitement réalisé avec DuckDB directement sur le fichier compressé source (7,6 Go), sans échantillonnage
+- Anomalies corrigées : valeurs manquantes (`?`), variantes tronquées de `authentication_type`, mélange de tickets Kerberos/identifiants utilisateurs dans `destination_computer` (nouvelle colonne `categorie_destination`)
+- Optimisations appliquées suite à des contraintes d'espace disque et de performance : lecture via `VIEW` (pas de matérialisation du brut), export direct en Parquet compressé ZSTD — voir [`rapport_nettoyage_silver.docx`](./rapport_nettoyage_silver.docx) pour le détail des difficultés rencontrées et solutions
 
 ## 👥 Équipe — Groupe 6
 
