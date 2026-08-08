@@ -114,7 +114,7 @@ groupe7-lakehouse-forensique/
 | 3       | Validation croisée avec redteam.txt.gz                 | ✅ Terminé |
 | 4       | Connexion Power BI directe aux données Gold (S3)       | ✅ Terminé |
 | 4       | Dashboard (6 visualisations)                           | ✅ Terminé |
-| 5       | Finalisation, soutenance                                | 🔜 En cours |
+| 5       | Finalisation, soutenance                                | ✅ Terminé  |
 
 **Dernière mise à jour** : Semaine 4 complétée — dashboard Power BI opérationnel avec 6 visualisations (top machines, évolution temporelle, top utilisateurs, activité par heure, efficacité des critères de détection, relation utilisateur-machine), connecté directement aux tables Gold sur S3.
 
@@ -140,6 +140,6 @@ Répartition des tâches :
 3. Lire ce README puis [`synthese_complete_projet.docx`](https://github.com/Julius-CREPPY/groupe7-lakehouse-forensique/blob/main/synthese_complete_projet.docx) pour une vue d'ensemble complète
 4. **Toujours faire `git pull` avant de commencer à travailler**, pour récupérer le travail des autres membres
 
-## 📅 Prochaine étape
+## 📅 Statut
 
-Soutenance dans 2 jours — finalisation de la présentation, répétition, vérification que le pipeline fonctionne de bout en bout pour la démo live.
+Soutenance réalisée. Projet finalisé — pipeline Bronze/Silver/Gold opérationnel, dashboard Power BI connecté à S3, validation croisée contre les 992 attaques redteam (91,63 % de détection combinée).
