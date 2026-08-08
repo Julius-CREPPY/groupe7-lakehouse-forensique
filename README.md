@@ -1,4 +1,4 @@
-# Groupe 7 — Architecture Lakehouse pour la forensique numérique
+# Groupe 6 — Architecture Lakehouse pour la forensique numérique
 
 Projet réalisé dans le cadre du Master 1 Cycle Ingénieur Cybersécurité — Semestre 2 (Data Engineering).
 
