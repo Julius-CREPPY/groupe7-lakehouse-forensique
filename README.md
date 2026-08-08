@@ -90,7 +90,7 @@ groupe7-lakehouse-forensique/
 ├── rapport_nettoyage_silver.docx      # Nettoyage + difficultés rencontrées (Semaine 2)
 ├── rapport_gold.docx                  # Agrégations + validation croisée redteam (Semaine 3)
 ├── synthese_complete_projet.docx      # Synthèse complète pour toute l'équipe
-├── code_identificaiton_bronze.R       # Script d'ingestion vers la zone Bronze
+├── code_identificaiton_bronze.R       # Script d'identification/ingestion vers la zone Bronze
 ├── 02_nettoyage_silver.R              # Script de nettoyage -> zone Silver
 ├── 03_gold_agregations.R              # Script des 8 tables Gold
 ├── 04_comparaison_criteres.R          # Comparaison des critères de détection
